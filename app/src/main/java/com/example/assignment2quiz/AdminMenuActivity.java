@@ -1,0 +1,4 @@
+package com.example.assignment2quiz;
+
+public class AdminMenuActivity {
+}

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "539992888744",
+    "project_id": "assignment2quiz",
+    "storage_bucket": "assignment2quiz.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:539992888744:android:2eaf38bddc0e668feab99d",
+        "android_client_info": {
+          "package_name": "com.example.assignment2quiz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "539992888744-itcpjf9h52l4mrn5qlevabve1gqiarse.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9fzUb_r9jpQO6RAwmNGNIeB0tRV_lUWM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "539992888744-itcpjf9h52l4mrn5qlevabve1gqiarse.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
