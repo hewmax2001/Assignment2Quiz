@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 
@@ -49,26 +50,20 @@ public class LoginActivity extends AppCompatActivity {
                 String username = txtUsername.getText().toString();
                 String password = txtPassword.getText().toString();
 
+               Handler.getUser(new Callback() {
+                   @Override
+                   public void onCallback(DataSnapshot snap) {
+                       User user = snap.getValue(User.class);
+                       login(user);
+                   }
 
+                   @Override
+                   public void onFailure() {
+                       Toast.makeText(getApplicationContext(), "This user does not exist.", Toast.LENGTH_SHORT).show();
+                   }
+               }, username, password);
 
-                CloudDatabase.readDataOnce(new Callback() {
-                    @Override
-                    public void onCallback(DataSnapshot snap) {
-                        Iterable<DataSnapshot> userSnaps = snap.getChildren();
-                        for (DataSnapshot userSnap: userSnaps) {
-                            User user = userSnap.getValue(User.class);
-                            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
-                                // TODO add current user functionality
-                                login();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure() {
-
-                    }
-                }, CloudDatabase.getRef("users"));
+                btnLogin.setEnabled(true);
             }
         });
 
@@ -87,8 +82,17 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void login() {
-        // TODO add login implementation
+    private void login(User user) {
+        Intent loginIntent;
+        if (user.isAdmin()) {
+            loginIntent = new Intent(getApplicationContext(), AdminMenuActivity.class);
+        }
+        else {
+            loginIntent = new Intent(getApplicationContext(), UserMenuActivity.class);
+        }
+        Handler.setCurrentUser(user);
+        startActivity(loginIntent);
+
     }
 
     private void loadRegistration() {

@@ -9,7 +9,7 @@ public class Handler {
 
     private static final String USER_REF = "users";
     private static final String QUIZ_REF = "quizzes";
-
+    private static User currentUser;
     private Handler() {}
 
     public static void start() {
@@ -67,5 +67,13 @@ public class Handler {
                 Log.d("GetUser(username + password)", "Getting users failed");
             }
         });
+    }
+
+    public static User getCurrentUser() {
+        return currentUser;
+    }
+
+    public static void setCurrentUser(User user) {
+        currentUser = user;
     }
 }
