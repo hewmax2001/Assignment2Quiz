@@ -19,15 +19,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class UserMenuActivity extends AppCompatActivity {
-    private Button btnOngoing, btnParticipated, btnUpcoming, btnPast;
+public class AdminViewQuizActivity extends AppCompatActivity {
+    private Button btnOngoing, btnUpcoming, btnPast, btnDelete;
     private RecyclerView recQuizView;
     private List<Quiz> allQuizzes;
+    private Quiz selectedQuiz;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_menu);
+        setContentView(R.layout.activity_admin_view_quiz);
         allQuizzes = new ArrayList<>();
         setElements();
     }
@@ -59,9 +60,9 @@ public class UserMenuActivity extends AppCompatActivity {
 
     private void setElements() {
         btnOngoing = findViewById(R.id.btn_view_ongoing);
-        btnParticipated = findViewById(R.id.btn_view_participated);
         btnUpcoming = findViewById(R.id.btn_view_upcoming);
         btnPast = findViewById(R.id.btn_view_past);
+        btnDelete = findViewById(R.id.btn_admin_quiz_delete);
 
         recQuizView = findViewById(R.id.rec_user_quiz_view);
 
@@ -76,13 +77,6 @@ public class UserMenuActivity extends AppCompatActivity {
             }
         });
 
-        btnParticipated.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewParticipated();
-            }
-        });
-
         btnUpcoming.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,6 +88,17 @@ public class UserMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 viewPast();
+            }
+        });
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (selectedQuiz == null) {
+                    Toast.makeText(getApplicationContext(), "No quiz selected", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                deleteQuiz();
             }
         });
     }
@@ -117,39 +122,9 @@ public class UserMenuActivity extends AppCompatActivity {
         RVQuizUserViewAdapter adapter = new RVQuizUserViewAdapter(new Consumer() {
             @Override
             public void accept(Object o) {
-                Quiz quiz = (Quiz) o;
-                Toast.makeText(getApplicationContext(), quiz.getName(), Toast.LENGTH_SHORT).show();
-                QuizHandler quizHandler = new QuizHandler(quiz);
-                Intent quizIntent = new Intent(getApplicationContext(), QuestionActivity.class);
-                quizIntent.putExtra("quizHandler", quizHandler);
-                startActivity(quizIntent);
+                selectedQuiz = (Quiz) o;
             }
         }, ongoingQuizzes);
-        recQuizView.setAdapter(adapter);
-    }
-
-    private void viewParticipated() {
-        if (Handler.getCurrentUser() == null) {return;}
-        clearRecycler();
-        ArrayList<Quiz> participatedQuizzes = new ArrayList<>();
-        for (Quiz quiz : allQuizzes) {
-            String userID = Handler.getCurrentUser().getId();
-            if (quiz.checkParticipant(userID))
-                participatedQuizzes.add(quiz);
-        }
-
-        RVQuizUserViewAdapter adapter = new RVQuizUserViewAdapter(new Consumer() {
-            @Override
-            public void accept(Object o) {
-                Quiz quiz = (Quiz) o;
-                String userID = Handler.getCurrentUser().getId();
-                if (quiz.checkParticipantLiked(userID))
-                    quiz.getLikes().remove(userID);
-                else
-                    quiz.insertParticipantLiked(userID);
-                Handler.updateQuiz(quiz);
-            }
-        }, participatedQuizzes);
         recQuizView.setAdapter(adapter);
     }
 
@@ -165,7 +140,7 @@ public class UserMenuActivity extends AppCompatActivity {
         RVQuizUserViewAdapter adapter = new RVQuizUserViewAdapter(new Consumer() {
             @Override
             public void accept(Object o) {
-                // Nothing needs to happen
+                selectedQuiz = (Quiz) o;
             }
         }, upcomingQuizzes);
         recQuizView.setAdapter(adapter);
@@ -183,7 +158,7 @@ public class UserMenuActivity extends AppCompatActivity {
         RVQuizUserViewAdapter adapter = new RVQuizUserViewAdapter(new Consumer() {
             @Override
             public void accept(Object o) {
-                // Nothing needs to happen
+                selectedQuiz = (Quiz) o;
             }
         }, pastQuizzes);
         recQuizView.setAdapter(adapter);
@@ -212,5 +187,12 @@ public class UserMenuActivity extends AppCompatActivity {
     private void clearRecycler() {
         recQuizView.removeAllViewsInLayout();
         recQuizView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private void deleteQuiz() {
+        if (selectedQuiz == null) {return;}
+        Handler.deleteQuiz(selectedQuiz);
+        getQuizzes();
+        viewOngoing();
     }
 }

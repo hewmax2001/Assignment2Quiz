@@ -1,5 +1,6 @@
 package com.example.assignment2quiz;
 
+import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
 
@@ -51,8 +52,16 @@ public class RVHolderUserView extends RecyclerView.ViewHolder {
             public void onClick(View v) {
                 consumer.accept(quiz);
                 setDetails(quiz);
+                if (Handler.getCurrentUser().isAdmin()) {
+
+                }
             }
         });
+    }
+
+    public void setColor(String color) {
+        int selectedColor = Color.parseColor(color);
+        cardView.setCardBackgroundColor(selectedColor);
     }
 
 }

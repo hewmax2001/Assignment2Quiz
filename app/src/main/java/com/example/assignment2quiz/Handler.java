@@ -135,6 +135,11 @@ public class Handler {
         CloudDatabase.insertData(quizRef, quiz);
     }
 
+    public static void deleteQuiz(Quiz quiz) {
+        DatabaseReference quizRef = getQuizRef(quiz.getId());
+        CloudDatabase.insertData(quizRef, null);
+    }
+
     public static DatabaseReference getUsersRef() {
         return CloudDatabase.getRef(USER_REF);
     }

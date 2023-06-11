@@ -45,6 +45,7 @@ public class AdminMenuActivity extends AppCompatActivity {
     }
 
     private void loadViewQuizzes() {
-
+        Intent viewQuizIntent = new Intent(this, AdminViewQuizActivity.class);
+        startActivity(viewQuizIntent);
     }
 }

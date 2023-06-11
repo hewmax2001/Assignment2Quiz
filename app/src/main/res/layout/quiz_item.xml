@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
+    app:cardBackgroundColor="#e3c378"
     android:id="@+id/car_quiz">
 
     <LinearLayout

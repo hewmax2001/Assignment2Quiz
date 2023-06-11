@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Assignment2Quiz"
         tools:targetApi="31">
         <activity
+            android:name=".AdminViewQuizActivity"
+            android:exported="false" />
+        <activity
             android:name=".AddQuizActivity"
             android:exported="false" />
         <activity
