@@ -6,4 +6,65 @@
     android:layout_height="match_parent"
     tools:context=".UserMenuActivity">
 
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_view_ongoing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="Ongoing" />
+
+            <Button
+                android:id="@+id/btn_view_participated"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="Participated" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_view_upcoming"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="Upcoming" />
+
+            <Button
+                android:id="@+id/btn_view_past"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="Past" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rec_user_quiz_view"
+        android:layout_width="409dp"
+        android:layout_height="550dp"
+        android:layout_marginTop="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.987" />
 </androidx.constraintlayout.widget.ConstraintLayout>

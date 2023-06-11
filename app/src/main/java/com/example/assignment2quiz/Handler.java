@@ -34,6 +34,20 @@ public class Handler {
         currentDate = dtf.format(LocalDateTime.now());
     }
 
+    public static void getAllQuizzes(Callback callback) {
+        CloudDatabase.readDataOnce(new Callback() {
+            @Override
+            public void onCallback(DataSnapshot snap) {
+                callback.onCallback(snap);
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        }, getQuizzesRef());
+    }
+
     public static void insertUser(Callback call, String username, String password) {
         getUser(new Callback() {
             @Override
@@ -98,7 +112,7 @@ public class Handler {
                                 questionsList.add(q);
                             }
                             String newID = CloudDatabase.getNewId();
-                            Quiz newQuiz = new Quiz(newID, name, category, difficulty, type, startDate, endDate, 0);
+                            Quiz newQuiz = new Quiz(newID, name, category, difficulty, type, startDate, endDate);
                             newQuiz.setQuestions(questionsList);
 
                             CloudDatabase.insertData(getQuizzesRef().child(newQuiz.getId()), newQuiz);
@@ -116,8 +130,17 @@ public class Handler {
         }, name);
     }
 
+    public static void updateQuiz(Quiz quiz) {
+        DatabaseReference quizRef = getQuizRef(quiz.getId());
+        CloudDatabase.insertData(quizRef, quiz);
+    }
+
     public static DatabaseReference getUsersRef() {
         return CloudDatabase.getRef(USER_REF);
+    }
+
+    private static DatabaseReference getUserRef(String id) {
+        return getUsersRef().child(id);
     }
 
     public static void getUsers(Callback call) {
@@ -130,6 +153,10 @@ public class Handler {
 
     private static DatabaseReference getQuizzesRef() {
         return CloudDatabase.getRef(QUIZ_REF);
+    }
+
+    private static DatabaseReference getQuizRef(String id) {
+        return getQuizzesRef().child(id);
     }
 
     private static void getQuizzes(Callback call) {
