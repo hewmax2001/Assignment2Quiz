@@ -192,6 +192,8 @@ public class AddQuizActivity extends AppCompatActivity {
             throw new RuntimeException(e);
         }
 
+        txtName.setText("");
+
         autCategory.setText("Any");
         autDifficulty.setText("Any");
         autType.setText("Any");
