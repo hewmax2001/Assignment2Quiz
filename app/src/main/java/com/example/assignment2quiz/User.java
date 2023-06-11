@@ -1,5 +1,9 @@
 package com.example.assignment2quiz;
 
+/**
+ * User of application.
+ * Can either be a player or an admin.
+ */
 public class User {
     private String id;
     private String username;

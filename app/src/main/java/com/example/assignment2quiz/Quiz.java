@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Quiz object
+ */
 public class Quiz implements Serializable {
     private String id;
     private String name;
@@ -17,8 +20,11 @@ public class Quiz implements Serializable {
     private List<Question> questions;
     private List<String> likes;
 
+    // Static HashMap of all possible categories and their associated IDs
     public static HashMap<Integer, String> categorySchema = new HashMap<Integer, String>();
+    // Static array of all possible difficulties
     public static final String[] difficulties = {"Any", "easy", "medium", "hard"};
+    // Static array of all possible types
     public static final String[] types = {"Any", "multiple", "boolean"};
 
     public Quiz() {
