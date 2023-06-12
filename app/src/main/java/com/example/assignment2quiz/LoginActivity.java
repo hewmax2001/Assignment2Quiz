@@ -92,7 +92,6 @@ public class LoginActivity extends AppCompatActivity {
         }
         Handler.setCurrentUser(user);
         startActivity(loginIntent);
-
     }
 
     private void loadRegistration() {
